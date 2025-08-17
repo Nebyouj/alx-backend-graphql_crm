@@ -10,7 +10,8 @@ class CustomerFilter(django_filters.FilterSet):
 
     class Meta:
         model = Customer
-        fields = ["name", "email", "created_at", "phone"]
+        fields = ['name', 'email', 'createdAtGte', 'createdAtLte', 'phonePattern']
+
 
 class ProductFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(field_name="name", lookup_expr="icontains")
@@ -21,7 +22,7 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ["name", "price", "stock"]
+        fields = ['name', 'price_gte', 'price_lte', 'stock_gte', 'stock_lte']
 
 class OrderFilter(django_filters.FilterSet):
     total_amount__gte = django_filters.NumberFilter(field_name="total_amount", lookup_expr="gte")
@@ -33,4 +34,4 @@ class OrderFilter(django_filters.FilterSet):
 
     class Meta:
         model = Order
-        fields = ["total_amount", "order_date"]
+        fields = ['total_amount_gte', 'total_amount_lte', 'order_date_gte', 'order_date_lte', 'customer_name', 'product_name']

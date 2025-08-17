@@ -10,7 +10,7 @@ class Mutation(CRMMutation, graphene.ObjectType):
 schema = graphene.Schema(query=Query, mutation=Mutation)
 
 
-# class Query(graphene.ObjectType):
-#     hello = graphene.String(default_value = "Hello, GraphQL!")
+class Query(graphene.ObjectType):
+    hello = graphene.String(default_value = "Hello, GraphQL!")
 
-# schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query)

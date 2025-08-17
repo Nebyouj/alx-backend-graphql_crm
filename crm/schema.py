@@ -109,9 +109,10 @@ class Query(graphene.ObjectType):
     all_customers = DjangoFilterConnectionField(CustomerType, filterset_class=CustomerFilter, order_by=graphene.List(of_type=graphene.String))
     all_products = DjangoFilterConnectionField(ProductType, filterset_class=ProductFilter, order_by=graphene.List(of_type=graphene.String))
     all_orders = DjangoFilterConnectionField(OrderType, filterset_class=OrderFilter, order_by=graphene.List(of_type=graphene.String))
-    all_customers = graphene.List(CustomerType)
-    all_products = graphene.List(ProductType)
-    all_orders = graphene.List(OrderType)
+    
+    customers = graphene.List(CustomerType)
+    products = graphene.List(ProductType)
+    orders = graphene.List(OrderType)
 
     def resolve_all_customers(self, info): return Customer.objects.all()
     def resolve_all_products(self, info): return Product.objects.all()
@@ -124,8 +125,13 @@ class Mutation(graphene.ObjectType):
     create_product = CreateProduct.Field()
     create_order = CreateOrder.Field()
 
+    createCustomer = CreateCustomer.Field()
+    bulkCreateCustomers = BulkCreateCustomers.Field()
+    createProduct = CreateProduct.Field()
+    createOrder = CreateOrder.Field()
 
-# class Query(graphene.ObjectType):
-#     hello = graphene.String(default_value = "Hello, GraphQL!")
 
-# schema = graphene.Schema(query=Query)
+class Query(graphene.ObjectType):
+    hello = graphene.String(default_value = "Hello, GraphQL!")
+
+schema = graphene.Schema(query=Query)
