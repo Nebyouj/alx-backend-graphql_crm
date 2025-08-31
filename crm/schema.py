@@ -135,3 +135,25 @@ class Query(graphene.ObjectType):
     hello = graphene.String(default_value = "Hello, GraphQL!")
 
 schema = graphene.Schema(query=Query)
+
+
+class ProductType(graphene.ObjectType):
+    id = graphene.ID()
+    name = graphene.String()
+    stock = graphene.Int()
+
+class UpdateLowStockProducts(graphene.Mutation):
+    success = graphene.String()
+    updated_products = graphene.List(ProductType)
+
+    def mutate(self, info):
+        low_stock = Product.objects.filter(stock__lt=10)
+        updated = []
+        for p in low_stock:
+            p.stock += 10
+            p.save()
+            updated.append(p)
+        return UpdateLowStockProducts(success="Restocked successfully", updated_products=updated)
+
+class Mutation(graphene.ObjectType):
+    update_low_stock_products = UpdateLowStockProducts.Field()
