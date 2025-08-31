@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 import requests, datetime
+from gql import gql, Client
+from gql.transport.requests import RequestsHTTPTransport
 
+transport = RequestsHTTPTransport(
+    url="http://localhost:8000/graphql",
+    verify=True,
+    retries=3,
+)
+
+client = Client(transport=transport, fetch_schema_from_transport=True)
 query = """
 query RecentOrders {
   orders(orderDate_Gte: "%s") {
